@@ -58,7 +58,7 @@ export default {
       this.isSubmitting = true;
       this.errorMessage = '';
 
-      console.log('API_URL:', process.env.API_URL); // Verifica la API_URL
+      console.log('API_URL:', process.env.API_URL); 
 
       try {
         const response = await fetch(`${process.env.API_URL}/api/login`, {
@@ -74,7 +74,7 @@ export default {
 
         const data = await response.json();
         
-        console.log('Response data:', data); // Imprimir la respuesta
+        console.log('Response data:', data); 
 
         if (!response.ok) {
           throw new Error(data.message || 'Error al iniciar sesión');

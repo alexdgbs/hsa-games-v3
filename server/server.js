@@ -10,7 +10,6 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import paypal from 'paypal-rest-sdk';
 import User from '../models/User.js';
-import cors from 'cors';
 import helmet from 'helmet';
 import fetch from 'node-fetch';
 import path from 'path'; 
@@ -18,27 +17,20 @@ import path from 'path';
 const app = express();
 app.use(express.static(path.join(__dirname, 'dist'))); 
 app.use(express.json());
-app.use(cors({
-  origin: 'https://www.hsa-games.com', 
-  credentials: true
-}));
 app.use(helmet());
-
 
 async function getAccessToken() {
   const response = await fetch('https://api.sandbox.paypal.com/v1/oauth2/token', {
     method: 'POST',
     headers: {
-      'Authorization': `Basic ${Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`).toString('base64')}`,
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: 'grant_type=client_credentials'
+    body: `grant_type=client_credentials&client_id=${process.env.PAYPAL_CLIENT_ID}&client_secret=${process.env.PAYPAL_CLIENT_SECRET}`
   });
 
   const data = await response.json();
   return data.access_token;
 }
-
 
 app.post('/api/cancel-subscription', async (req, res) => {
   const { subscriptionId } = req.body;
@@ -204,7 +196,7 @@ app.post('/api/login', async (req, res) => {
       isSubscribed: user.isSubscribed 
     }, { 
       httpOnly: true, 
-      secure: false, 
+      secure: true, 
       sameSite: 'None' 
     });
 
