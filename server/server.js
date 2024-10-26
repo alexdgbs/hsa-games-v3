@@ -19,8 +19,8 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'dist'))); 
 app.use(express.json());
 app.use(cors({
-  origin: '*',
-  credentials: true
+  origin: 'https://www.hsa-games.com', 
+  credentials: true, 
 }));
 app.use(helmet());
 
