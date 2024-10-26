@@ -69,8 +69,7 @@ typings/
 .nuxt
 
 # Nuxt generate
-dist
-
+# dist  # Comentado para incluir la carpeta dist
 # vuepress build output
 .vuepress/dist
 
