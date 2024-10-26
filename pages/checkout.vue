@@ -40,7 +40,7 @@ export default {
       if (emailCookie) {
         const emailValue = emailCookie.split('=')[1];
         try {
-          const response = await fetch(`${process.env.API_URL}/api/user?email=${email}`);
+          const response = await fetch(`${process.env.API_URL}/api/user?email=${emailValue}`);
 
 
           if (response.ok) {
