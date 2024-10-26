@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json());
 app.use(cors({
   origin: 'https://www.hsa-games.com', 
-  credentials: true, 
+  credentials: true
 }));
 app.use(helmet());
 
