@@ -16,7 +16,7 @@ import fetch from 'node-fetch';
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: ['https://hsa-games.com', 'https://www.hsa-games.com'],
+  origin: '*',
   credentials: true
 }));
 app.use(helmet());
@@ -120,7 +120,6 @@ app.post('/api/subscribe', async (req, res) => {
   }
 });
 
-
 app.post('/api/update-subscription', async (req, res) => {
   const { email, isSubscribed } = req.body;
 
@@ -222,8 +221,9 @@ app.post('/api/create-payment', (req, res) => {
       description: 'Suscripción Retro-Arcade' 
     }],
     redirect_urls: {
-      return_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel'
+      return_url: `${process.env.FRONTEND_URL}/success`,
+      cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+      
     }
   };
 

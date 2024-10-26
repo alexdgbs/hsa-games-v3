@@ -61,6 +61,7 @@ methods: {
   async getUserInfo(email) {
     try {
       const response = await fetch(`${process.env.API_URL}/api/user?email=${email}`);
+
       if (!response.ok) {
         throw new Error('Error en la respuesta de la API');
       }

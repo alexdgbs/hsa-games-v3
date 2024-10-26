@@ -155,12 +155,12 @@ export default {
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 1.46, 0.5, 1.05);
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
   transform: translateY(-10px);
 }
 
 .fixed.inset-0 {
-  z-index: 9999; /* Asegúrate de que sea un valor alto */
+  z-index: 9999; 
 }
 </style>

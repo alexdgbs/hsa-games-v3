@@ -37,10 +37,10 @@ export default {
       isAdmin: false, 
       isSubscribed: false,
       games: [
-        { id: 1, name: 'Eternal Darkness Sanitys Requiem', cover: '/img/eternal-darkness-sanitys-requiem.webp', downloadLink: 'https://sto.romsfast.com/GameCube-RVZ/Eternal%20Darkness%20-%20Sanitys%20Requiem%20(USA).zip?token=c3xZcltjWVFOEHJxU3dYYQtbFkJ5IlN8UmYKWxUWc3ZTcFRgWx1FFnN9UXZZYl9Y', description: 'Acción' },
+        { id: 1, name: 'Eternal Darkness Sanitys Requiem', cover: '/img/eternal-darkness-sanitys-requiem.webp', downloadLink: 'https://sto.romsfast.com/GameCube-RVZ/Eternal%20Darkness%20-%20Sanitys%20Requiem%20(USA).zip?token=c3xZcltjWVFOEHJxU3dYYQtbFkJ5IlN8UmYKWxUWc3ZTcFRgWx1FFnN9UXZZYl9Y', description: ' Acción' },
         { id: 2, name: 'Skies of Arcadia Legends', cover: '/img/skies-of-arcadia-legends.webp', downloadLink: 'https://sto.romsfast.com/GameCube-RVZ/Skies%20of%20Arcadia%20Legends%20(USA).zip?token=c3xZcltjWVFOEHJxU3dYYQtbFkJ5IlN8UmYKWxUWc3ZTcFRgWx1FFnN9UXZZZFhT', description: 'RPG' },
         { id: 3, name: 'Billy Hatcher and the Giant Egg', cover: '/img/billy-hatcher-and-the-giant-egg.webp', downloadLink: 'https://sto.romsfast.com/GameCube-RVZ/Billy%20Hatcher%20and%20the%20Giant%20Egg%20(USA).zip?token=c3xZcltjWVFOEHJxU3dYYQtbFkJ5IlN8UmYKWxUWc3ZTcFRgWx1FFnN9UXZZZF1W', description: 'Plataforma' },
-        { id: 4, name: 'Viewtiful Joe', cover: '/img/viewtiful-joe.webp', downloadLink: 'https://sto.romsfast.com/GameCube-RVZ/Viewtiful%20Joe%20(USA).zip?token=c3xZcltjWVFOEHJxU3dYYQtbFkJ5IlN8UmYKWxUWc3ZTcFRgWx1FFnN9UXZZZF9Z', description: 'Plataforma' },
+        { id: 4, name: 'Viewtiful Joe', cover: '/img/viewtiful-joe.webp', downloadLink: 'https://sto.romsfast.com/GameCube-RVZ/Viewtiful%20Joe%20(USA).zip?token=c3xZcltjWVFOEHJxU3dYYQtbFkJ5IlN8UmYKWxUWc3ZTcFRgWx1FFnN9UXZZZF9Z', description: ' Plataforma' },
         { id: 5, name: 'Splinter Cell', cover: '/img/splintercellnintendo.jpg', downloadLink: 'https://sto.romsfast.com/GameCube-RVZ/Tom%20Clancys%20Splinter%20Cell%20(USA).zip?token=c3xZcltjWVFOEHJxU3dYYQtbFkJ5IlN8UmYKWxUWc3ZTcFRgWx1FFnN9UXZZZVxX', description: 'Acción/Estrategia' },
         { id: 6, name: 'Mario Party 4', cover: '/img/Mario-Party-4.jpg', downloadLink: 'https://sto.romsfast.com/GameCube-RVZ/Mario%20Party%204%20(USA).zip?token=c3xZcltjWVFOEHJxU3dYYQtbFkJ5IlN8UmYKWxUWc3ZTcFRgWx1FFnN9UXZZZl1R', description: 'Multijugador' },
         { id: 7, name: '2002 FIFA World Cup', cover: '/img/fifa2002.jpg', downloadLink: 'https://sto.romsfast.com/GameCube-RVZ/2002%20FIFA%20World%20Cup%20(USA).zip?token=c3xZcltjWVFOEHJxU3dYYQtbFkJ5IlN8UmYKWxUWc3ZTcFRgWx1FFnN9UXZZZlxW', description: 'Deportes' },
@@ -127,3 +127,4 @@ export default {
   transform: translateY(-20px);
 }
 </style>
+

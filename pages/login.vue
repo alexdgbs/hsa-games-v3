@@ -54,45 +54,44 @@ export default {
     };
   },
   methods: {
-
     async handleLogin() {
-  this.isSubmitting = true;
-  this.errorMessage = '';
+      this.isSubmitting = true;
+      this.errorMessage = '';
 
-  try {
-    const response = await fetch(`${process.env.API_URL}/api/login`, {
-      
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: this.email,
-        password: this.password,
-      }),
-    });
+      console.log('API_URL:', process.env.API_URL); // Verifica la API_URL
 
-    const data = await response.json();
+      try {
+        const response = await fetch(`${process.env.API_URL}/api/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password,
+          }),
+        });
 
-    if (!response.ok) {
-      throw new Error(data.message || 'Error al iniciar sesión');
-    }
+        const data = await response.json();
+        
+        console.log('Response data:', data); // Imprimir la respuesta
 
-    document.cookie = `email=${data.email}; path=/;`;
-    document.cookie = `isSubscribed=${data.isSubscribed}; path=/;`;
+        if (!response.ok) {
+          throw new Error(data.message || 'Error al iniciar sesión');
+        }
 
-    
-    this.$router.push('/');
-   
-    window.dispatchEvent(new Event('storage'));
+        document.cookie = `email=${data.email}; path=/;`;
+        document.cookie = `isSubscribed=${data.isSubscribed}; path=/;`;
 
-  } catch (error) {
-    this.errorMessage = error.message || 'Error de red. Inténtalo de nuevo.';
-  } finally {
-    this.isSubmitting = false;
-  }
-},
+        this.$router.push('/');
+        window.dispatchEvent(new Event('storage'));
 
+      } catch (error) {
+        this.errorMessage = error.message || 'Error de red. Inténtalo de nuevo.';
+      } finally {
+        this.isSubmitting = false;
+      }
+    },
   },
 };
 </script>

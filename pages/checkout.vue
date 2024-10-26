@@ -23,14 +23,14 @@
 export default {
   data() {
     return {
-      isSubscribed: false,
+      isSubscribed: false, 
     };
   },
   mounted() {
     this.checkSubscription();
-
+    
     const script = document.createElement('script');
-    script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.PAYPAL_CLIENT_ID}&currency=MXN`;
+    script.src = "https://www.paypal.com/sdk/js?client-id=AXQeb763-UfMzlLsheOGAQdXyM-xzZ4MPxXXZAaZ44MQT-7bWdbDuiRxl6-gwxuCgXf6Jnc0LKSdL1vk&currency=MXN";
     script.addEventListener('load', this.renderPayPalButton);
     document.body.appendChild(script);
   },
@@ -40,11 +40,12 @@ export default {
       if (emailCookie) {
         const emailValue = emailCookie.split('=')[1];
         try {
-          const response = await fetch(`${process.env.API_URL}/api/user?email=${emailValue}`);
+          const response = await fetch(`${process.env.API_URL}/api/user?email=${email}`);
+
 
           if (response.ok) {
             const userData = await response.json();
-            this.isSubscribed = userData.isSubscribed;
+            this.isSubscribed = userData.isSubscribed; 
           }
         } catch (error) {
           console.error('Error al obtener la información del usuario:', error);
@@ -75,6 +76,7 @@ export default {
 
             if (emailValue) {
               const response = await fetch(`${process.env.API_URL}/api/update-subscription`, {
+
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -105,6 +107,7 @@ export default {
 
         if (emailValue) {
           const response = await fetch(`${process.env.API_URL}/api/update-subscription`, {
+            
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
