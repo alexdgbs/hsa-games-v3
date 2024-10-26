@@ -3,6 +3,7 @@ dotenv.config();
 console.log('MONGO_URI:', process.env.MONGO_URI); 
 console.log('PAYPAL_CLIENT_ID:', process.env.PAYPAL_CLIENT_ID);
 console.log('PAYPAL_CLIENT_SECRET:', process.env.PAYPAL_CLIENT_SECRET);
+console.log('API_URL:', process.env.API_URL);
 
 import express from 'express';
 import mongoose from 'mongoose';
@@ -11,9 +12,11 @@ import paypal from 'paypal-rest-sdk';
 import User from '../models/User.js';
 import cors from 'cors';
 import helmet from 'helmet';
-import fetch from 'node-fetch'; 
+import fetch from 'node-fetch';
+import path from 'path'; 
 
 const app = express();
+app.use(express.static(path.join(__dirname, 'dist'))); 
 app.use(express.json());
 app.use(cors({
   origin: '*',
@@ -87,11 +90,13 @@ app.get('/api/user', async (req, res) => {
   }
 });
 
+
 paypal.configure({
   mode: 'sandbox',
   client_id: process.env.PAYPAL_CLIENT_ID,
   client_secret: process.env.PAYPAL_CLIENT_SECRET
 });
+
 
 app.post('/api/subscribe', async (req, res) => {
   const { email } = req.body;
@@ -120,6 +125,7 @@ app.post('/api/subscribe', async (req, res) => {
   }
 });
 
+
 app.post('/api/update-subscription', async (req, res) => {
   const { email, isSubscribed } = req.body;
 
@@ -146,10 +152,12 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Conectado a MongoDB'))
   .catch((err) => console.error('Error conectando a MongoDB:', err));
 
+
 app.get('/api/test', (req, res) => {
   console.log('Se ha recibido una solicitud en /api/test');
   res.json({ message: 'API funcionando' });
 });
+
 
 app.post('/api/register', async (req, res) => {
   const { email, password } = req.body;
@@ -168,6 +176,7 @@ app.post('/api/register', async (req, res) => {
     res.status(500).json({ message: 'Error al registrar el usuario' });
   }
 });
+
 
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
@@ -206,6 +215,7 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+
 app.post('/api/create-payment', (req, res) => {
   const { amount } = req.body;
 
@@ -223,7 +233,6 @@ app.post('/api/create-payment', (req, res) => {
     redirect_urls: {
       return_url: `${process.env.FRONTEND_URL}/success`,
       cancel_url: `${process.env.FRONTEND_URL}/cancel`,
-      
     }
   };
 
@@ -236,6 +245,7 @@ app.post('/api/create-payment', (req, res) => {
     }
   });
 });
+
 
 app.post('/api/upgrade-admin', async (req, res) => {
   const email = '8hsabitgames@gmail.com';
@@ -258,50 +268,29 @@ app.post('/api/upgrade-admin', async (req, res) => {
   }
 });
 
-app.get('/api/execute-payment', async (req, res) => {
-  const { paymentId, PayerID, email } = req.query;
 
-  if (!paymentId || !PayerID || !email) {
-    return res.status(400).json({ message: 'Payment ID, Payer ID y email son requeridos.' });
-  }
+app.post('/api/execute-payment', (req, res) => {
+  const { paymentId, payerId } = req.body;
 
-  const executePaymentJson = {
-    payer_id: PayerID,
-  };
+  const executePaymentJson = { payer_id: payerId };
 
-  paypal.payment.execute(paymentId, executePaymentJson, async (error, payment) => {
+  paypal.payment.execute(paymentId, executePaymentJson, (error, payment) => {
     if (error) {
       console.error('Error ejecutando el pago:', error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: 'Internal Server Error' });
     } else {
-      try {
-        const user = await User.findOne({ email });
-        if (!user) {
-          return res.status(404).json({ message: 'Usuario no encontrado' });
-        }
-
-        if (payment.state !== 'approved') {
-          return res.status(400).json({ message: 'El pago no fue aprobado' });
-        }
-
-        console.log('Antes de guardar el usuario:', user);
-        user.isSubscribed = true;
-        await user.save();
-        console.log('Después de guardar el usuario:', user);
-
-        res.json({ success: true, message: 'Pago completado y usuario actualizado a premium' });
-      } catch (error) {
-        console.error('Error actualizando el usuario:', error);
-        return res.status(500).json({ message: 'Error actualizando el usuario' });
-      }
+      res.json({ payment });
     }
   });
 });
 
-const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-export default app;
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
+});
